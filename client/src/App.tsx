@@ -1,7 +1,7 @@
 // import { useState } from 'react'
 import {useQuery, gql} from '@apollo/client';
 
-const GETALLPOSTS = gql`
+const GET_ALL_POSTS = gql`
   query GetAllPosts {
     getAllPosts {
       _id
@@ -15,7 +15,7 @@ const GETALLPOSTS = gql`
 `;
 
 function App() {
-  const {data, error} = useQuery(GETALLPOSTS);
+  const {data, error} = useQuery(GET_ALL_POSTS);
 
   if (error) {
     console.log(error);
