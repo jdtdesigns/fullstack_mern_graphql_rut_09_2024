@@ -46,5 +46,5 @@ jobs:
         curl -X POST \
           -H "Authorization: Bearer $RENDER_API_KEY" \
           -H "Content-Type: application/json" \
-          --data '{"serviceId": "csvmsuhopnds738bp4o0", "branch": "main"}' \
-          https://api.render.com/v1/services/csvmsuhopnds738bp4o0/deploys
+          --data '{"serviceId": "srv-csvmsuhopnds738bp4o0", "branch": "main"}' \
+          https://api.render.com/v1/services/srv-csvmsuhopnds738bp4o0/deploys
