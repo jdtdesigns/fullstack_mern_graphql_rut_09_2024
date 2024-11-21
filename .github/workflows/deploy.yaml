@@ -28,6 +28,7 @@ jobs:
       env: 
         JWT_SECRET: ${{ secrets.JWT_SECRET }}
         MONGODB_URL: ${{ secrets.MONGODB_URL }}
+        PORT: 10000
       run: npm run test
 
   deploy:
