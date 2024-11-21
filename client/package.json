@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "cypress:open": "cypress open",
-    "cypress:run": "cypress run --e2e --headless"
+    "cypress:run": "cypress run"
   },
   "dependencies": {
     "@apollo/client": "^3.11.10",

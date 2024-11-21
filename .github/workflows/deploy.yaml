@@ -1,4 +1,4 @@
-name: Deploy to Render
+name: CI
 
 on:
   push:
@@ -29,7 +29,7 @@ jobs:
         JWT_SECRET: ${{ secrets.JWT_SECRET }}
         MONGODB_URL: ${{ secrets.MONGODB_URL }}
         PORT: 10000
-      run: npm test &
+      run: npm test
 
   deploy:
     runs-on: ubuntu-latest
@@ -47,4 +47,4 @@ jobs:
           -H "Authorization: Bearer $RENDER_API_KEY" \
           -H "Content-Type: application/json" \
           --data '{"serviceId": "srv-csvmsuhopnds738bp4o0", "branch": "main"}' \
-          https://api.render.com/v1/services/srv-csvmsuhopnds738bp4o0/deploys
+          https://api.render.com/v1/services/srv-csvmsuhopnds738bp4o0/deploys 
