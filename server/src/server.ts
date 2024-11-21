@@ -52,4 +52,6 @@ connection.once('open', async () => {
   });
 });
 
+export default app;
+
 

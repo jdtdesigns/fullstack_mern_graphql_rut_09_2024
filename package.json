@@ -16,7 +16,8 @@
     "render:install": "cd ./server && npm i",
     "install": "cd ./server && npm i && cd ../client && npm i",
     "test:dev": "concurrently \"npm run dev\" \"wait-on tcp:5173 && cd ./client && npm run cypress:open\"",
-    "test": "concurrently \"npm start\" \"wait-on tcp:${PORT} && cd ./client && npm run cypress:run\""
+    "cypress:test": "cd ./client && npm run cypress:run",
+    "test": "start-server-and-test start http://localhost:${PORT} cypress:test"
   },
   "keywords": [],
   "author": "",
@@ -24,6 +25,8 @@
   "devDependencies": {
     "concurrently": "^9.1.0",
     "dotenv": "^10.0.0",
-    "wait-on": "^8.0.1"
+    "start-server-and-test": "^2.0.8",
+    "wait-on": "^8.0.1",
+    "why-is-node-running": "^3.2.1"
   }
 }
