@@ -45,15 +45,16 @@ jobs:
       run: |
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git switch -c ref
         git fetch origin main
         git checkout main
         git reset --hard origin/main
-        git merge --no-ff ${{ github.head_ref }} || echo "Merge conflict detected. Please resolve conflicts manually."
+        git merge --no-ff ref || echo "Merge conflict detected. Please resolve conflicts manually."
         git push origin main
 
   deploy:
     runs-on: ubuntu-latest
-    needs: integration # This makes the deploy job wait for the integration job
+    needs: merge # This makes the deploy job wait for the integration job
 
     steps:
     - name: Checkout code
