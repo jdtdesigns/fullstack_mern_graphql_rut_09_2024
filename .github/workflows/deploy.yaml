@@ -49,6 +49,7 @@ jobs:
         git switch -c ref
         git fetch origin main
         git checkout main
+        git reset --hard origin/main
         git merge --no-ff ref --allow-unrelated-histories
         git push origin main
 
