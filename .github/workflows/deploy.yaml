@@ -53,7 +53,7 @@ jobs:
         git reset --hard origin/main
         git fetch origin ${{ github.head_ref }}
         git merge origin/${{ github.head_ref }} --allow-unrelated-histories || echo "Merge conflict detected. Please resolve conflicts manually."
-        git push https://x-access-token:${{ secrets.TOKEN }}@github.com/${{ github.repository }} something
+        git push https://x-access-token:${{ secrets.TOKEN }}@github.com/${{ github.repository }} origin main
 
   deploy:
     runs-on: ubuntu-latest
