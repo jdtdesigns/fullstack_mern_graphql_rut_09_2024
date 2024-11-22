@@ -1,7 +1,7 @@
 name: CI
 
 on:
-  push:
+  pull_request:
     branches:
       - main
 
@@ -12,6 +12,8 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
+      with:
+        ref: ${{ github.head_ref }}
 
     - name: Install Node.js
       uses: actions/setup-node@v2
@@ -22,7 +24,7 @@ jobs:
       run: npm install
 
     - name: Run builds
-      run: npm run server:build & npm run client:build &
+      run: npm run server:build && npm run client:build
 
     - name: Run integration tests
       env: 
@@ -31,9 +33,31 @@ jobs:
         PORT: 10000
       run: npm test
 
+  merge:
+    runs-on: ubuntu-latest
+    needs: integration
+    if: github.event_name == 'pull_request'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Merge pull request
+      env:
+        TOKEN: ${{ secrets.TOKEN }}
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git config pull.rebase false
+        git switch -c ref
+        git fetch origin main
+        git checkout main
+        git reset --hard origin/main
+        git merge --no-ff ref --allow-unrelated-histories || echo "Merge conflict detected. Please resolve conflicts manually."
+        git push https://x-access-token:${{ secrets.TOKEN }}@github.com/${{ github.repository }} main
+
   deploy:
     runs-on: ubuntu-latest
-    needs: integration # This makes the deploy job wait for the integration job
+    needs: merge # This makes the deploy job wait for the integration job
 
     steps:
     - name: Checkout code
