@@ -48,11 +48,9 @@ jobs:
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
         git config pull.rebase false
-        git switch -c ref
-        git fetch origin main
-        git checkout main
+        git fetch origin ${{ github.head_ref }}
         git reset --hard origin/main
-        git merge --no-ff ref --allow-unrelated-histories || echo "Merge conflict detected. Please resolve conflicts manually."
+        git merge ${{ github.head_ref }} --allow-unrelated-histories || echo "Merge conflict detected. Please resolve conflicts manually."
         git push https://x-access-token:${{ secrets.TOKEN }}@github.com/${{ github.repository }} main
 
   deploy:
