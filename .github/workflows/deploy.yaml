@@ -4,9 +4,6 @@ on:
   pull_request:
     branches:
       - main
-  push:
-    branches:
-      - main
 
 jobs:
   integration:
@@ -15,6 +12,8 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
+      with:
+        ref: ${{ github.head_ref }}
 
     - name: Install Node.js
       uses: actions/setup-node@v2
@@ -25,7 +24,7 @@ jobs:
       run: npm install
 
     - name: Run builds
-      run: npm run server:build && npm run client:build &
+      run: npm run server:build && npm run client:build
 
     - name: Run Cypress tests
       env:
@@ -46,11 +45,10 @@ jobs:
       run: |
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
-        git switch -c ref
         git fetch origin main
         git checkout main
         git reset --hard origin/main
-        git merge --no-ff ref --allow-unrelated-histories
+        git merge --no-ff ${{ github.head_ref }} || echo "Merge conflict detected. Please resolve conflicts manually."
         git push origin main
 
   deploy:
