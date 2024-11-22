@@ -46,7 +46,8 @@ jobs:
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
         git config pull.rebase false
-        git switch -c main
+        git fetch origin main
+        git checkout main
         git reset --hard origin/main
         git fetch origin ${{ github.head_ref }}
         git merge ${{ github.head_ref }} --allow-unrelated-histories || echo "Merge conflict detected. Please resolve conflicts manually."
