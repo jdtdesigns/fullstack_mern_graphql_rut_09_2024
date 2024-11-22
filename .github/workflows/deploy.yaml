@@ -46,9 +46,10 @@ jobs:
       run: |
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git switch -c ref
         git fetch origin main
         git checkout main
-        git merge --no-ff ${{ github.head_ref }}
+        git merge --no-ff ref
         git push origin main
 
   deploy:
